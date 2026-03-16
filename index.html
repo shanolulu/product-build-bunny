@@ -1,15 +1,82 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hello World</title>
-  <link href='/style.css' rel='stylesheet'>
+  <title>엑셀 파일 비교</title>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <link href="/style.css" rel="stylesheet">
 </head>
 <body>
-  <h1>Hello, world!</h1>
-  <button onclick="console.log('hello');">Press me</button>
-  <script defer type="text/javascript" src="/main.js"></script>
+
+  <header>
+    <h1>엑셀 파일 비교</h1>
+    <div id="summary" class="summary hidden">
+      <span class="summary-item modified" id="sum-modified">수정 0</span>
+      <span class="summary-item added"    id="sum-added">추가 0행</span>
+      <span class="summary-item deleted"  id="sum-deleted">삭제 0행</span>
+    </div>
+    <div class="header-hint hidden" id="header-hint">강조된 셀을 클릭하면 반대쪽에 적용할 수 있습니다 &nbsp;·&nbsp; Ctrl+Z 실행취소</div>
+  </header>
+
+  <main class="panels">
+
+    <!-- 좌측 패널 -->
+    <div class="panel" id="panel-left">
+      <div class="panel-header">
+        <span class="panel-title" id="title-left">파일 A</span>
+      </div>
+      <div class="drop-zone" id="drop-left">
+        <div class="drop-content">
+          <div class="drop-icon">📂</div>
+          <p>파일을 여기에 끌어다 놓거나</p>
+          <label class="btn-upload">
+            파일 선택
+            <input type="file" id="file-left" accept=".xlsx,.xls,.csv" hidden>
+          </label>
+          <p class="file-hint">.xlsx · .xls · .csv 지원</p>
+        </div>
+      </div>
+      <div class="sheet-tabs hidden" id="tabs-left"></div>
+      <div class="table-container hidden" id="table-left"></div>
+      <div class="panel-footer hidden" id="footer-left">
+        <button class="btn-download" id="download-left-btn">⬇ 좌측 파일 다운로드</button>
+      </div>
+    </div>
+
+    <div class="splitter"></div>
+
+    <!-- 우측 패널 -->
+    <div class="panel" id="panel-right">
+      <div class="panel-header">
+        <span class="panel-title" id="title-right">파일 B</span>
+      </div>
+      <div class="drop-zone" id="drop-right">
+        <div class="drop-content">
+          <div class="drop-icon">📂</div>
+          <p>파일을 여기에 끌어다 놓거나</p>
+          <label class="btn-upload">
+            파일 선택
+            <input type="file" id="file-right" accept=".xlsx,.xls,.csv" hidden>
+          </label>
+          <p class="file-hint">.xlsx · .xls · .csv 지원</p>
+        </div>
+      </div>
+      <div class="sheet-tabs hidden" id="tabs-right"></div>
+      <div class="table-container hidden" id="table-right"></div>
+      <div class="panel-footer hidden" id="footer-right">
+        <button class="btn-download" id="download-right-btn">⬇ 우측 파일 다운로드</button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- 컨텍스트 메뉴 -->
+  <div class="context-menu hidden" id="context-menu">
+    <div id="ctx-apply">적용</div>
+  </div>
+
+  <script src="/main.js"></script>
 </body>
 
 </html>

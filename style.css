@@ -1,1 +1,290 @@
-/* Add styles here */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', sans-serif;
+  background: #f0f2f5;
+  color: #1a1a2e;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ─── Header ─────────────────────────────── */
+header {
+  background: #1e293b;
+  color: white;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-shrink: 0;
+  min-height: 52px;
+}
+
+header h1 {
+  font-size: 17px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.summary {
+  display: flex;
+  gap: 8px;
+}
+.summary.hidden { display: none; }
+
+.summary-item {
+  font-size: 12px;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.summary-item.modified { background: #fef08a; color: #713f12; }
+.summary-item.added    { background: #bbf7d0; color: #14532d; }
+.summary-item.deleted  { background: #fecaca; color: #7f1d1d; }
+
+.header-hint {
+  font-size: 12px;
+  color: #94a3b8;
+  white-space: nowrap;
+}
+.header-hint.hidden { display: none; }
+
+/* ─── Panels ─────────────────────────────── */
+.panels {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: white;
+  min-width: 0;
+}
+
+.splitter {
+  width: 5px;
+  background: #e2e8f0;
+  flex-shrink: 0;
+  cursor: col-resize;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  padding: 9px 16px;
+  background: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+  flex-shrink: 0;
+  min-height: 42px;
+}
+
+.panel-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ─── Drop Zone ──────────────────────────── */
+.drop-zone {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #cbd5e1;
+  margin: 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: #f8fafc;
+}
+
+.drop-zone:hover,
+.drop-zone.drag-over {
+  border-color: #6366f1;
+  background: #eef2ff;
+}
+
+.drop-zone.hidden { display: none; }
+
+.drop-content {
+  text-align: center;
+  color: #64748b;
+  pointer-events: none;
+}
+
+.drop-content label {
+  pointer-events: all;
+}
+
+.drop-icon {
+  font-size: 44px;
+  margin-bottom: 12px;
+  line-height: 1;
+}
+
+.drop-content p {
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.file-hint {
+  font-size: 12px !important;
+  color: #94a3b8;
+  margin-top: 8px !important;
+  margin-bottom: 0 !important;
+}
+
+.btn-upload {
+  display: inline-block;
+  background: #6366f1;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-upload:hover { background: #4f46e5; }
+
+/* ─── Sheet Tabs ─────────────────────────── */
+.sheet-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 8px 12px;
+  background: #f1f5f9;
+  border-bottom: 1px solid #e2e8f0;
+  flex-shrink: 0;
+  overflow-x: auto;
+}
+.sheet-tabs.hidden { display: none; }
+
+.sheet-tab {
+  padding: 3px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  background: white;
+  font-size: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s;
+  color: #475569;
+}
+.sheet-tab.active {
+  background: #6366f1;
+  color: white;
+  border-color: #6366f1;
+}
+.sheet-tab:hover:not(.active) { background: #e0e7ff; }
+
+/* ─── Table ──────────────────────────────── */
+.table-container {
+  flex: 1;
+  overflow: auto;
+}
+.table-container.hidden { display: none; }
+
+table {
+  border-collapse: collapse;
+  font-size: 12px;
+  width: max-content;
+  min-width: 100%;
+}
+
+td {
+  padding: 5px 10px;
+  border: 1px solid #e2e8f0;
+  white-space: nowrap;
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}
+
+tr:nth-child(even) td { background: #f8fafc; }
+
+/* ─── Diff Styles ────────────────────────── */
+.cell-modified {
+  background: #fef9c3 !important;
+  cursor: pointer;
+  position: relative;
+}
+.cell-modified:hover {
+  background: #fde047 !important;
+  outline: 2px solid #ca8a04;
+  outline-offset: -2px;
+  z-index: 1;
+}
+.cell-modified::after {
+  content: '✎';
+  position: absolute;
+  right: 3px;
+  top: 2px;
+  font-size: 9px;
+  color: #92400e;
+  opacity: 0.6;
+}
+
+.cell-added   { background: #dcfce7 !important; }
+.cell-deleted { background: #fee2e2 !important; }
+
+.row-placeholder td { background: #f1f5f9 !important; border-color: #e2e8f0 !important; }
+.row-added    td { background: #dcfce7 !important; }
+.row-deleted  td { background: #fee2e2 !important; }
+
+/* ─── Footer / Download ──────────────────── */
+.panel-footer {
+  padding: 10px 16px;
+  border-top: 1px solid #e2e8f0;
+  background: #f8fafc;
+  flex-shrink: 0;
+}
+.panel-footer.hidden { display: none; }
+
+.btn-download {
+  background: #059669;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.2s;
+  font-family: inherit;
+}
+.btn-download:hover { background: #047857; }
+
+/* ─── Context Menu ───────────────────────── */
+.context-menu {
+  position: fixed;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  z-index: 1000;
+  overflow: hidden;
+  min-width: 160px;
+}
+.context-menu.hidden { display: none; }
+
+.context-menu div {
+  padding: 10px 16px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.context-menu div:hover { background: #f1f5f9; }

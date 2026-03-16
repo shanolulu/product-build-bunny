@@ -1,0 +1,13 @@
+{
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "GEMINI.md",
+      "README.md",
+      "project-idea-notes.md",
+      "firebase-debug.log"
+    ]
+  }
+}
